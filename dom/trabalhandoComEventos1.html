@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Trabalhando com Eventos #01</title>
+    <link rel='stylesheet' href='css/estilo.css'>
+</head>
+
+<body class="conteudo exercicio">
+    <div>
+        <!--onclick="navegarEm5s(event)"-->
+        <a href="https://google.com.br">Google</a> 
+    </div>
+    <script>
+        //onclick dentro do link passando a função do evento, fica mais legivel, porém "hardcoded"
+        function navegarEm5s (e) {
+            e.preventDefault()//preventDefault para prevenir a ação padrão do html
+            setTimeout(() => {
+                window.location.href = e.target.href//target é o elemento html que disparou o evento
+            }, 5000);//
+        }
+
+        const a = document.querySelector('a')
+        a.onclick = navegarEm5s//dessa forma fica mais direto o coding e evita que escreva a função em cada tag html
+    </script>
+</body>

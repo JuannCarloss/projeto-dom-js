@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Selecionar Elementos #01</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="conteudo exercicio">
+    <div id="primeiro">#primeiro</div>
+    <div>Segundo</div>
+    <div class="terceiro ultimo">.terceiro .ultimo</div>
+    <script>              
+        document.getElementById('primeiro').classList.add('destaque')
+        //acima, pego elemento pelo id e adiciono a classe destaque a ele
+        
+        const divs = document.getElementsByTagName('div')
+        //aqui, crio uma constante que puxa a lista de divs do html todo
+       
+        Array.from(divs).forEach(e => e.classList.remove('destaque'))
+        //aqui, passo um for each dentro da lista de divs e removo a classe destaque das que estiverem com ela
+
+        const divsArray = [...divs]//reticencias = comando spread, espalha algo dentro de um array
+        divsArray.forEach(e => e.classList.add('destaque'))
+        //aqui, um forEach percorrendo o novo array e colocando a classe destauqe em todas as divs
+
+        const ultimosElementos = document.getElementsByClassName('ultimo')
+        //usando o dir no console da page, retorna apenas a class que tem o nome "ultimo"
+    </script>
+</body>
+</html>

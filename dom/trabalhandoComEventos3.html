@@ -1,0 +1,111 @@
+</html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Trabalhando com Eventos #03</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+        }
+        
+        .esquerda {
+            height: 100vh;
+            width: 50%;
+            background-color: coral;
+        }
+        
+        .direita {
+            height: 100vh;
+            width: 50%;
+            background-color: cornflowerblue;
+        }
+        
+        .item {
+            border: solid 5px black;
+            background-color: darkgrey;
+            color: white;
+            height: 100px;
+            font-size: 40px;
+            margin: 10px;
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="esquerda" wm-dropzone>
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+    </div>
+    <div class="direita" wm-dropzone></div>
+    <script>
+        const items = document.querySelectorAll('[wm-dropzone] .item')
+        items.forEach((item, index) => {
+            item.draggable = true
+           item.id = item.id || `draggable-item-${index}`
+           item.ondragstart = e =>
+                e.dataTransfer.setData('item-id', e.target.id)
+        })
+
+/*Dentro da função de callback, duas ações são 
+realizadas:
+
+a) item.draggable = true;: A propriedade draggable de cada 
+item é definida como true. A propriedade draggable é usada 
+para indicar se um elemento HTML pode ser arrastado.
+
+b) item.id = item.id || draggable-item-${index};: 
+A propriedade id de cada item é definida com base em duas
+condições:
+
+Primeiro, verifica-se se item.id já possui um valor. 
+Se já tiver, o valor existente é mantido. 
+Isso é feito usando a expressão item.id || .... Se item.id
+já tiver um valor verdadeiro (ou seja, não é null, undefined 
+ou uma string vazia), esse valor será mantido como item.id.
+
+Caso item.id não tenha um valor ou seja falso 
+(ou seja, null, undefined ou uma string vazia), 
+uma nova string é atribuída a item.id. Essa nova string é 
+criada usando a template string (delimitada por crases) 
+com o formato draggable-item-${index}, em que ${index} é o 
+valor do índice atual.
+
+Dentro da função de manipulador de evento, a seguinte ação 
+é realizada:
+
+e.dataTransfer.setData('item-id', e.target.id); 
+configura os dados que serão transferidos durante a operação 
+de arrastar e soltar. A função setData é chamada no objeto 
+dataTransfer, que é uma propriedade do evento dragstart 
+(e.dataTransfer).
+
+'item-id' é o formato do tipo de dados que está sendo 
+definido. Neste caso, é um tipo personalizado chamado 
+"item-id".
+
+e.target.id é o valor do ID do elemento atual que está 
+sendo arrastado. A propriedade target do evento (e.target)
+ refere-se ao elemento em que o evento foi acionado, e .id 
+ acessa o valor do atributo id desse elemento.*/
+
+        const dropzones = document.querySelectorAll('[wm-dropzone]')
+        dropzones.forEach(dropzone => {
+            dropzone.ondragover = e => e.preventDefault()
+            dropzone.ondrop = function (e) {
+                const id = e.dataTransfer.getData('item-id')
+                const item = document.getElementById(id)
+                //e.target.appendChild(item)
+                dropzone.appendChild(item)
+            }
+        })
+    </script>
+</body>
+
+</html>
